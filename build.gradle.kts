@@ -1,40 +1,18 @@
 
-
 plugins {
+
     alias(libs.plugins.kotlin.jvm)
+    `maven-publish`
+
 }
 
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-
+val excludedAllProjects = listOf(":ctool4k-dependencies")
 allprojects {
 
-    alias()
-
-    apply(plugin = "java-library")
-    apply(plugin = libs.plugins.kotlin.jvm)
-
-    repositories {
-        mavenCentral()
+    if (this.path in excludedAllProjects) {
+        return@allprojects // 终止当前项目配置
     }
 
-    dependencies {
-
-        testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-        testImplementation(libs.junit.jupiter.engine)
-
-        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    }
-
-    tasks.named<Test>("test") {
-        // Use JUnit Platform for unit tests.
-        useJUnitPlatform()
-    }
+    apply(from = "${rootProject.projectDir}/compile.gradle.kts")
 
 }
