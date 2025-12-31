@@ -9,11 +9,12 @@ plugins {
 val excludedAllProjects = listOf(":ctool4k-dependencies")
 allprojects {
 
+    apply(from = "${rootProject.projectDir}/publish.gradle.kts")
+
     if (this.path in excludedAllProjects) {
         return@allprojects // 终止当前项目配置
     }
 
     apply(from = "${rootProject.projectDir}/compile.gradle.kts")
-    apply(from = "${rootProject.projectDir}/publish.gradle.kts")
 
 }
