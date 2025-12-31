@@ -11,4 +11,6 @@ plugins {
 }
 
 rootProject.name = "ctool4k"
+include("ctool4k-dependencies")
+
 include("app")
