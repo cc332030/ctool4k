@@ -14,5 +14,6 @@ allprojects {
     }
 
     apply(from = "${rootProject.projectDir}/compile.gradle.kts")
+    apply(from = "${rootProject.projectDir}/publish.gradle.kts")
 
 }
