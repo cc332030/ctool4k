@@ -11,11 +11,22 @@ plugins {
 }
 
 rootProject.name = "ctool4k"
-include("ctool4k-dependencies")
 
-include("ctool4k-parent")
-include("ctool4k-parent:ctool4k-component")
-include("ctool4k-parent:ctool4k-component:ctool4k-definition")
-include("ctool4k-parent:ctool4k-component:ctool4k-web")
+val baseDir = file(".")
+baseDir.walk() // 递归遍历所有子目录
+    .filter { dir ->
+        dir.isDirectory
+                && !file("${dir.absolutePath}/settings.gradle.kts").exists()
+                && file("${dir.absolutePath}/build.gradle.kts").exists()
+    }
+    .forEach { moduleDir ->
 
-include("app")
+        val moduleName = moduleDir.name
+        val logicalModuleName = ":$moduleName"
+
+        include(logicalModuleName)
+        project(logicalModuleName).projectDir = moduleDir
+
+        println("注册平铺子项目：$logicalModuleName -> 物理路径：${moduleDir.absolutePath}")
+
+    }
