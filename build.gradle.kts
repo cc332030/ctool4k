@@ -1,3 +1,4 @@
+import org.gradle.internal.os.OperatingSystem
 
 plugins {
 
@@ -36,7 +37,12 @@ allprojects {
     }
 
     repositories {
+
+        maven {
+            url = uri("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+        }
         mavenCentral()
+
     }
 
     val isJavax = project.name.endsWith("-javax")
