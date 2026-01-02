@@ -1,5 +1,3 @@
-import org.gradle.internal.os.OperatingSystem
-
 plugins {
 
     id("idea")
@@ -19,16 +17,28 @@ group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
 description = "CTool for Kotlin"
 
-val mavenCentral: String? = System.getProperty("MAVEN_CENTRAL")
+fun getConfigValue(key: String): String? {
 
-val nexusUsername: String? = System.getProperty("NEXUS_USERNAME")
-val nexusPassword: String? = System.getProperty("NEXUS_PASSWORD")
+    val value = System.getenv(key)
+    if(!value.isNullOrEmpty()) {
+        return value;
+    }
 
-val nexusSnapshotId: String? = System.getenv("NEXUS_SNAPSHOT_ID")
-val nexusSnapshotUrl: String? = System.getenv("NEXUS_SNAPSHOT_URL")
+    return System.getProperty(key);
+}
 
-val nexusReleaseId: String? = System.getenv("NEXUS_RELEASE_ID")
-val nexusReleaseUrl: String? = System.getenv("NEXUS_RELEASE_URL")
+val mavenCentral: String? = getConfigValue("MAVEN_CENTRAL")
+
+println("mavenCentral: ${mavenCentral}")
+
+val nexusUsername: String? = getConfigValue("NEXUS_USERNAME")
+val nexusPassword: String? = getConfigValue("NEXUS_PASSWORD")
+
+val nexusSnapshotId: String? = getConfigValue("NEXUS_SNAPSHOT_ID")
+val nexusSnapshotUrl: String? = getConfigValue("NEXUS_SNAPSHOT_URL")
+
+val nexusReleaseId: String? = getConfigValue("NEXUS_RELEASE_ID")
+val nexusReleaseUrl: String? = getConfigValue("NEXUS_RELEASE_URL")
 
 val excludedAllProjects = listOf(":ctool4k-dependencies")
 allprojects {
@@ -90,11 +100,11 @@ allprojects {
     } else {
         apply(plugin = rootProject.libs.plugins.spring.boot4.get().pluginId)
 
-        dependencyManagement {
-            imports {
-                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.1.0}")
-            }
-        }
+        //dependencyManagement {
+        //    imports {
+        //        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.1.0}")
+        //    }
+        //}
 
     }
 
