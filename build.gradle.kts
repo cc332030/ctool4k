@@ -3,7 +3,7 @@ plugins {
 
     id("idea")
 
-    alias(libs.plugins.maven.publish) apply false
+    alias(libs.plugins.maven.publish)
 
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring) apply false
