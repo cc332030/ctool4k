@@ -16,7 +16,7 @@ allprojects {
 
     idea {
         module {
-            println("name: ${name}, project.name: ${project.name}")
+            //println("name: ${name}, project.name: ${project.name}")
             name = project.name
         }
     }
