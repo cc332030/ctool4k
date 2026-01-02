@@ -16,5 +16,6 @@ include("ctool4k-dependencies")
 include("ctool4k-parent")
 include("ctool4k-parent:ctool4k-component")
 include("ctool4k-parent:ctool4k-component:ctool4k-definition")
+include("ctool4k-parent:ctool4k-component:ctool4k-web")
 
 include("app")
