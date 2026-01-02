@@ -25,8 +25,7 @@ baseDir.walk() // 递归遍历所有子目录
         val logicalModuleName = ":$moduleName"
 
         include(logicalModuleName)
-        project(logicalModuleName).projectDir = moduleDir
-
-        println("注册平铺子项目：$logicalModuleName -> 物理路径：${moduleDir.absolutePath}")
+        val logicalModule = project(logicalModuleName)
+        logicalModule.projectDir = moduleDir
 
     }
