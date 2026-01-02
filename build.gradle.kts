@@ -43,10 +43,6 @@ allprojects {
         }
     }
 
-    if (this.path in excludedAllProjects) {
-        return@allprojects // 终止当前项目配置
-    }
-
     repositories {
 
         if(!mavenCentral.isNullOrEmpty()) {
@@ -77,6 +73,10 @@ allprojects {
             }
         }
 
+    }
+
+    if (this.path in excludedAllProjects) {
+        return@allprojects // 终止当前项目配置
     }
 
     val isJavax = project.name.endsWith("-javax")
