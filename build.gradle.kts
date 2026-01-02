@@ -32,6 +32,11 @@ allprojects {
 
     dependencies {
 
+        testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+        testImplementation(rootProject.libs.junit.jupiter.engine)
+
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
     }
 
     tasks.named<Test>("test") {
