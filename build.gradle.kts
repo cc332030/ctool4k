@@ -2,19 +2,25 @@
 plugins {
 
     alias(libs.plugins.kotlin.jvm)
-    `maven-publish`
+    alias(libs.plugins.maven.publish)
 
 }
 
 val excludedAllProjects = listOf(":ctool4k-dependencies")
 allprojects {
 
-    apply(from = "${rootProject.projectDir}/publish.gradle.kts")
-
+    apply(plugin = "maven-publish")
     if (this.path in excludedAllProjects) {
         return@allprojects // 终止当前项目配置
     }
 
-    apply(from = "${rootProject.projectDir}/compile.gradle.kts")
+    apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+
+    }
 
 }

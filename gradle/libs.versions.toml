@@ -11,3 +11,5 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.2.20" }
+
+maven-publish = { id = "maven-publish" }
