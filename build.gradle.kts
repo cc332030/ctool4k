@@ -34,4 +34,8 @@ allprojects {
 
     }
 
+    tasks.named<Test>("test") {
+        useJUnitPlatform()
+    }
+
 }
