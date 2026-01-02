@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring) apply false
 
-    alias(libs.plugins.spring.boot2) apply false
+    //alias(libs.plugins.spring.boot2) apply false
     alias(libs.plugins.spring.boot4) apply false
     alias(libs.plugins.spring.dependency.management) apply false
 
@@ -18,6 +18,17 @@ plugins {
 group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
 description = "CTool for kotlin"
+
+val mavenCentral: String? = System.getProperty("MAVEN_CENTRAL")
+
+val nexusUsername: String? = System.getProperty("NEXUS_USERNAME")
+val nexusPassword: String? = System.getProperty("NEXUS_PASSWORD")
+
+val nexusSnapshotId: String? = System.getenv("NEXUS_SNAPSHOT_ID")
+val nexusSnapshotUrl: String? = System.getenv("NEXUS_SNAPSHOT_URL")
+
+val nexusReleaseId: String? = System.getenv("NEXUS_RELEASE_ID")
+val nexusReleaseUrl: String? = System.getenv("NEXUS_RELEASE_URL")
 
 val excludedAllProjects = listOf(":ctool4k-dependencies")
 allprojects {
@@ -38,10 +49,33 @@ allprojects {
 
     repositories {
 
-        maven {
-            url = uri("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+        if(!mavenCentral.isNullOrEmpty()) {
+            maven {
+                url = uri(mavenCentral)
+            }
+        } else {
+            mavenCentral()
         }
-        mavenCentral()
+
+        if(!nexusSnapshotUrl.isNullOrEmpty()) {
+            maven {
+                url = uri(nexusSnapshotUrl)
+                credentials {
+                    username = nexusUsername
+                    password = nexusPassword
+                }
+            }
+        }
+
+        if(!nexusReleaseUrl.isNullOrEmpty()) {
+            maven {
+                url = uri(nexusReleaseUrl)
+                credentials {
+                    username = nexusUsername
+                    password = nexusPassword
+                }
+            }
+        }
 
     }
 
