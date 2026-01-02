@@ -6,6 +6,11 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.maven.publish)
 
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot2) apply false
+    alias(libs.plugins.spring.boot4) apply false
+    alias(libs.plugins.spring.dependency.management)
+
 }
 
 group = "com.c332030"
@@ -35,7 +40,8 @@ allprojects {
 
     val isJavax = project.name.endsWith("-javax")
     apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.kotlin.plugin.spring.get().pluginId)
+
+    apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
     apply(plugin = rootProject.libs.plugins.spring.dependency.management.get().pluginId)
 
     if(isJavax) {
@@ -50,8 +56,6 @@ allprojects {
         }
 
     }
-
-
 
     dependencies {
 
