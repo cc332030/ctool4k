@@ -1,6 +1,6 @@
 
 dependencies {
 
-    implementation(project(":ctool4k-definition"))
+    api(project(":ctool4k-definition"))
 
 }

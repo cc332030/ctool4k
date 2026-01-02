@@ -1,6 +1,6 @@
 
 dependencies {
 
-    implementation(project(":ctool4k-spring-base"))
+    api(project(":ctool4k-spring-base"))
 
 }
