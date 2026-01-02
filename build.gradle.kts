@@ -19,8 +19,12 @@ description = "CTool for Kotlin"
 
 fun getConfigValue(key: String): String? {
     return providers
-        .gradleProperty(key)
+        // 1. 系统属性（-D 参数）
+        .systemProperty(key)
+        // 2. 环境变量
         .orElse(providers.environmentVariable(key))
+        // 3. gradle.properties
+        .orElse(providers.gradleProperty(key))
         .getOrNull()
 }
 
