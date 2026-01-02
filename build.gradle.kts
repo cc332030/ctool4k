@@ -18,16 +18,14 @@ version = "0.0.1-SNAPSHOT"
 description = "CTool for Kotlin"
 
 fun getConfigValue(key: String): String? {
-
-    val value = System.getenv(key)
-    if(!value.isNullOrEmpty()) {
-        return value;
-    }
-
-    return System.getProperty(key);
+    return providers
+        .gradleProperty(key)
+        .orElse(providers.environmentVariable(key))
+        .getOrNull()
 }
 
 val mavenCentral: String? = getConfigValue("MAVEN_CENTRAL")
+println("mavenCentral: $mavenCentral")
 
 val nexusUsername: String? = getConfigValue("NEXUS_USERNAME")
 val nexusPassword: String? = getConfigValue("NEXUS_PASSWORD")
