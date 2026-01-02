@@ -17,7 +17,7 @@ plugins {
 
 group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
-description = "CTool for kotlin"
+description = "CTool for Kotlin"
 
 val mavenCentral: String? = System.getProperty("MAVEN_CENTRAL")
 
