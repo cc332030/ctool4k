@@ -3,13 +3,14 @@ plugins {
 
     id("idea")
 
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.maven.publish)
+    alias(libs.plugins.maven.publish) apply false
 
-    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.spring) apply false
+
     alias(libs.plugins.spring.boot2) apply false
     alias(libs.plugins.spring.boot4) apply false
-    alias(libs.plugins.spring.dependency.management)
+    alias(libs.plugins.spring.dependency.management) apply false
 
 }
 
