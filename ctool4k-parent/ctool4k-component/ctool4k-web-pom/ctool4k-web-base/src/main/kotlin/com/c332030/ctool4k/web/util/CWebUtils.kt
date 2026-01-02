@@ -1,8 +1,9 @@
 package com.c332030.ctool4k.web.util
 
+import com.c332030.ctool4k.core.util.ignoreCaseSetOf
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.Enumeration
+import java.util.*
 
 /**
  * <p>
@@ -20,6 +21,11 @@ import java.util.Enumeration
  * @author c332030
  * @since 2026/1/2
  */
+
+val forwardHeadersIgnore: Set<String> = ignoreCaseSetOf(
+    "host"
+)
+
 fun forward(
     inputStream: InputStream,
     outputStream: OutputStream,
@@ -27,10 +33,30 @@ fun forward(
     getHeaderFunc:  (String) -> String?,
     setHeaderFunc: (String, String) -> Unit,
 ) {
+    forward(
+        inputStream,
+        outputStream,
+        headerNameEnumeration.asIterator(),
+        getHeaderFunc,
+        setHeaderFunc,
+    )
+}
 
-    while (headerNameEnumeration.hasMoreElements()) {
+fun forward(
+    inputStream: InputStream,
+    outputStream: OutputStream,
+    headerNameIter: Iterator<String>,
+    getHeaderFunc:  (String) -> String?,
+    setHeaderFunc: (String, String) -> Unit,
+) {
 
-        val headerName = headerNameEnumeration.nextElement()
+    while (headerNameIter.hasNext()) {
+
+        val headerName = headerNameIter.next()
+        if(forwardHeadersIgnore.contains(headerName)) {
+            continue
+        }
+
         val headerValue = getHeaderFunc(headerName)
         if(!headerValue.isNullOrEmpty()) {
             setHeaderFunc.invoke(headerName, headerValue)
