@@ -29,8 +29,6 @@ fun getConfigValue(key: String): String? {
 
 val mavenCentral: String? = getConfigValue("MAVEN_CENTRAL")
 
-println("mavenCentral: ${mavenCentral}")
-
 val nexusUsername: String? = getConfigValue("NEXUS_USERNAME")
 val nexusPassword: String? = getConfigValue("NEXUS_PASSWORD")
 
