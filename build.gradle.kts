@@ -61,11 +61,9 @@ allprojects {
     val springBootVersion: String
     val springCloudVersion: String
     if(isJavax) {
-        //apply(plugin = rootProject.libs.plugins.spring.boot2.get().pluginId)
         springBootVersion = rootProject.libs.versions.spring.boot2.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
     } else {
-        //apply(plugin = rootProject.libs.plugins.spring.boot4.get().pluginId)
         springBootVersion = rootProject.libs.versions.spring.boot4.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2025.get()
     }
