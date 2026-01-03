@@ -3,10 +3,10 @@ include:
   - https://cnb.cool/cc332030/gradle/-/blob/master/gitlab/publish-job.yml
 
 .publish: &publish
-  extends: .publish_job
+  extends: .publish-job
 
 .publish-8: &publish-8
-  extends: .publish_job
+  extends: .publish-job
   env:
     JDK_VERSION_COMPILE: 8
 
