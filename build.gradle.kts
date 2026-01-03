@@ -64,6 +64,9 @@ allprojects {
     apply(plugin = "idea")
     apply(plugin = "maven-publish")
 
+    group = rootProject.group
+    version = rootProject.version
+
     val projectName = project.name
 
     idea {
