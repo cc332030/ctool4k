@@ -12,7 +12,8 @@ fun getConfigValue(key: String): String? {
         .getOrNull()
 }
 
-val mavenCentral = getConfigValue("NEXUS_CENTRAL")
+val mavenCentral = getConfigValue("MAVEN_CENTRAL")
+
 repositories {
 
     mavenLocal()

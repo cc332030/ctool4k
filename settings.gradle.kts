@@ -55,7 +55,7 @@ dependencyResolutionManagement {
     repositories {
 
         // 从配置中读取仓库相关参数
-        val nexusCentralUrl = getConfigValue("NEXUS_CENTRAL")
+        val mavenCentralUrl = getConfigValue("MAVEN_CENTRAL")
         val nexusUsername = getConfigValue("NEXUS_USERNAME")
         val nexusPassword = getConfigValue("NEXUS_PASSWORD")
         val nexusSnapshotUrl = getConfigValue("NEXUS_SNAPSHOT_URL")
@@ -64,9 +64,9 @@ dependencyResolutionManagement {
         // 核心仓库配置（与原逻辑完全一致）
         mavenLocal()
 
-        if (!nexusCentralUrl.isNullOrEmpty()) {
+        if (!mavenCentralUrl.isNullOrEmpty()) {
             maven {
-                url = uri(nexusCentralUrl)
+                url = uri(mavenCentralUrl)
             }
         }
 
