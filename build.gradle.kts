@@ -55,6 +55,8 @@ allprojects {
 
     repositories {
 
+        mavenLocal()
+
         if(!mavenCentral.isNullOrEmpty()) {
             maven {
                 url = uri(mavenCentral)
