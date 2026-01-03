@@ -56,9 +56,7 @@ allprojects {
 
     val isJavax = project.name.endsWith("-javax")
     apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
-
     apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
-    apply(plugin = rootProject.libs.plugins.spring.dependency.management.get().pluginId)
 
     val springBootVersion: String
     val springCloudVersion: String
