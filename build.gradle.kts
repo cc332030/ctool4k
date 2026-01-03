@@ -86,7 +86,9 @@ allprojects {
     val enableJar = !isPom
 
     //println("projectName: $projectName, isPom: $isPom")
-    if(dependenciesModule != projectName) {
+    if(dependenciesModule == projectName) {
+        apply(plugin = "java-platform")
+    } else {
         apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
         tasks.named<Jar>("jar") {
             enabled = enableJar
@@ -138,6 +140,9 @@ allprojects {
                     }
                 }
 
+                if(dependenciesModule == projectName) {
+                    from(components["javaPlatform"])
+                }
                 if(!isPom) {
                     from(components["java"])
                 }
