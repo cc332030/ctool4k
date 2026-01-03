@@ -13,8 +13,6 @@ plugins {
 
 }
 
-val jdkVersion = getConfigValue("JDK_VERSION")
-
 group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
 description = "CTool for Kotlin"
