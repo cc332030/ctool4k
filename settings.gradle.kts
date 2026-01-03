@@ -16,6 +16,7 @@ val baseDir = file(".")
 baseDir.walk() // 递归遍历所有子目录
     .filter { dir ->
         dir.isDirectory
+                && "buildSrc" != dir.name
                 && !file("${dir.absolutePath}/settings.gradle.kts").exists()
                 && file("${dir.absolutePath}/build.gradle.kts").exists()
     }

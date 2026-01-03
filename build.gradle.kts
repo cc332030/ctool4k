@@ -1,3 +1,18 @@
+import com.c332030.ctool4k.gradle.buildsrc.util.configureSharedRepositories
+
+fun getConfigValue(key: String): String? {
+    return providers
+        // 1. 系统属性（-D 参数）
+        .systemProperty(key)
+        // 2. 环境变量
+        .orElse(providers.environmentVariable(key))
+        // 3. gradle.properties
+        .orElse(providers.gradleProperty(key))
+        .getOrNull()
+}
+
+val jdkVersion = getConfigValue("jdk-version")
+
 plugins {
 
     id("idea")
@@ -17,30 +32,21 @@ group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
 description = "CTool for Kotlin"
 
-fun getConfigValue(key: String): String? {
-    return providers
-        // 1. 系统属性（-D 参数）
-        .systemProperty(key)
-        // 2. 环境变量
-        .orElse(providers.environmentVariable(key))
-        // 3. gradle.properties
-        .orElse(providers.gradleProperty(key))
-        .getOrNull()
-}
-
-val mavenCentral: String? = getConfigValue("MAVEN_CENTRAL")
+val mavenCentral = getConfigValue("MAVEN_CENTRAL")
 println("mavenCentral: $mavenCentral")
 
-val nexusUsername: String? = getConfigValue("NEXUS_USERNAME")
-val nexusPassword: String? = getConfigValue("NEXUS_PASSWORD")
+val nexusUsername = getConfigValue("NEXUS_USERNAME")
+val nexusPassword = getConfigValue("NEXUS_PASSWORD")
 
-val nexusSnapshotId: String? = getConfigValue("NEXUS_SNAPSHOT_ID")
-val nexusSnapshotUrl: String? = getConfigValue("NEXUS_SNAPSHOT_URL")
+val nexusSnapshotId = getConfigValue("NEXUS_SNAPSHOT_ID")
+val nexusSnapshotUrl = getConfigValue("NEXUS_SNAPSHOT_URL")
 
-val nexusReleaseId: String? = getConfigValue("NEXUS_RELEASE_ID")
-val nexusReleaseUrl: String? = getConfigValue("NEXUS_RELEASE_URL")
+val nexusReleaseId = getConfigValue("NEXUS_RELEASE_ID")
+val nexusReleaseUrl = getConfigValue("NEXUS_RELEASE_URL")
 
-val excludedAllProjects = listOf(":ctool4k-dependencies")
+val excludedAllProjects = listOf(
+    ":ctool4k-dependencies",
+)
 allprojects {
 
     apply(plugin = "idea")
@@ -54,37 +60,7 @@ allprojects {
     }
 
     repositories {
-
-        mavenLocal()
-
-        if(!mavenCentral.isNullOrEmpty()) {
-            maven {
-                url = uri(mavenCentral)
-            }
-        } else {
-            mavenCentral()
-        }
-
-        if(!nexusSnapshotUrl.isNullOrEmpty()) {
-            maven {
-                url = uri(nexusSnapshotUrl)
-                credentials {
-                    username = nexusUsername
-                    password = nexusPassword
-                }
-            }
-        }
-
-        if(!nexusReleaseUrl.isNullOrEmpty()) {
-            maven {
-                url = uri(nexusReleaseUrl)
-                credentials {
-                    username = nexusUsername
-                    password = nexusPassword
-                }
-            }
-        }
-
+        configureSharedRepositories(this@allprojects)
     }
 
     if (this.path in excludedAllProjects) {
