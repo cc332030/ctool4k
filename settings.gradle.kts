@@ -28,6 +28,7 @@ if(isJdk8) {
 }
 
 rootProject.name = rootProjectName
+println("rootProjectName: $rootProjectName")
 
 val baseDir = file(".")
 baseDir.walk() // 递归遍历所有子目录
