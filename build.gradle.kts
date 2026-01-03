@@ -53,6 +53,7 @@ allprojects {
         return@allprojects // 终止当前项目配置
     }
 
+    val isJavax = project.name.endsWith("-javax")
     val isJakarta = project.name.endsWith("-jakarta")
     if(isJdk8 && isJakarta) {
         return@allprojects
@@ -64,7 +65,10 @@ allprojects {
     val springBootVersion: String
     val springCloudVersion: String
 
-    if(isJdk8) {
+    if(isJavax) {
+        springBootVersion = rootProject.libs.versions.spring.boot2.get()
+        springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
+    } else if(isJdk8) {
         springBootVersion = rootProject.libs.versions.spring.boot2.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
     } else {
