@@ -152,7 +152,8 @@ allprojects {
 
         repositories {
             maven {
-                name = nexusId
+                // 影响 idea 侧边栏名称
+                //name = nexusId
                 url = uri(nexusUrl)
                 credentials {
                     username = nexusUsername
