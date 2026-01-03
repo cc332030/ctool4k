@@ -46,7 +46,7 @@ description = "CTool for Kotlin"
 
 val isSnapshot = versionStr.endsWith("-SNAPSHOT")
 
-val mavenCentral = getConfigValue("MAVEN_CENTRAL")
+val mavenCentral = getConfigValue("NEXUS_CENTRAL")
 println("mavenCentral: $mavenCentral")
 
 val nexusUsername = getConfigValue("NEXUS_USERNAME")

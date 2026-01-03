@@ -15,7 +15,7 @@ import org.gradle.api.artifacts.dsl.RepositoryHandler
 fun RepositoryHandler.configureSharedRepositories(project: Project) {
 
     // 从配置中读取仓库相关参数
-    val mavenCentralUrl = project.getConfigValue("MAVEN_CENTRAL")
+    val nexusCentralUrl = project.getConfigValue("NEXUS_CENTRAL")
     val nexusUsername = project.getConfigValue("NEXUS_USERNAME")
     val nexusPassword = project.getConfigValue("NEXUS_PASSWORD")
     val nexusSnapshotUrl = project.getConfigValue("NEXUS_SNAPSHOT_URL")
@@ -24,9 +24,9 @@ fun RepositoryHandler.configureSharedRepositories(project: Project) {
     // 核心仓库配置（与原逻辑完全一致）
     mavenLocal()
 
-    if (!mavenCentralUrl.isNullOrEmpty()) {
+    if (!nexusCentralUrl.isNullOrEmpty()) {
         maven {
-            url = project.uri(mavenCentralUrl)
+            url = project.uri(nexusCentralUrl)
         }
     }
 
