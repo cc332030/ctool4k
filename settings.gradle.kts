@@ -17,7 +17,7 @@ val jdkVersion = getConfigValue("JDK_VERSION")
     ?: getConfigValue("java.version")
         ?.split('.')
         ?.firstOrNull()
-println("JDK_VERSION: $jdkVersion")
+println("jdkVersion: $jdkVersion")
 
 val isJdk8 = jdk8Str == jdkVersion
 
