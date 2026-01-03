@@ -70,8 +70,8 @@ allprojects {
 
     dependencies {
 
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}}"))
-        implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}}"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
+        implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
 
         compileOnly("org.springframework.boot:spring-boot-starter-web")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
