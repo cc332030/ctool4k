@@ -1,6 +1,7 @@
 
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
+import com.c332030.ctool4k.gradle.buildsrc.util.getRequireConfigValue
 
 plugins {
 
@@ -18,9 +19,13 @@ val jdk8Str = "8"
 val jdkVersion = getJdkVersion()
 val isJdk8 = jdk8Str == jdkVersion
 
+val versionStr = "0.0.1-SNAPSHOT"
+
 group = "com.c332030"
-version = "0.0.1-SNAPSHOT"
+version = versionStr
 description = "CTool for Kotlin"
+
+val isSnapshot = versionStr.endsWith("-SNAPSHOT")
 
 val mavenCentral = getConfigValue("MAVEN_CENTRAL")
 println("mavenCentral: $mavenCentral")
@@ -43,9 +48,9 @@ allprojects {
     apply(plugin = "maven-publish")
 
     val projectName = project.name
+
     idea {
-        module {
-            //println("name: ${name}, projectName: ${projectName}")
+        module { //println("name: ${name}, projectName: ${projectName}")
             name = projectName
         }
     }
@@ -56,7 +61,7 @@ allprojects {
 
     val isJavax = projectName.endsWith("-javax")
     val isJakarta = projectName.endsWith("-jakarta")
-    if(isJdk8 && isJakarta) {
+    if (isJdk8 && isJakarta) {
         return@allprojects
     }
 
@@ -66,10 +71,10 @@ allprojects {
     val springBootVersion: String
     val springCloudVersion: String
 
-    if(isJavax) {
+    if (isJavax) {
         springBootVersion = rootProject.libs.versions.spring.boot2.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
-    } else if(isJdk8) {
+    } else if (isJdk8) {
         springBootVersion = rootProject.libs.versions.spring.boot2.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
     } else {
@@ -91,17 +96,61 @@ allprojects {
 
     }
 
+    java {
+        withSourcesJar()
+    }
+
     kotlin {
         compilerOptions {
             freeCompilerArgs.addAll(
-                "-Xjsr305=strict",
-                "-Xannotation-default-target=param-property"
+                "-Xjsr305=strict", "-Xannotation-default-target=param-property"
             )
         }
     }
 
     tasks.named<Test>("test") {
         useJUnitPlatform()
+    }
+
+    val enableJar = !projectName.endsWith("-pom")
+    tasks.named<Jar>("jar") {
+        enabled = enableJar
+    }
+    tasks.named<Jar>("sourcesJar") {
+        enabled = enableJar
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+            }
+        }
+
+        val nexusUsername = getRequireConfigValue("NEXUS_USERNAME")
+        val nexusPassword = getRequireConfigValue("NEXUS_PASSWORD")
+
+        val nexusId: String
+        val nexusUrl: String
+        if(isSnapshot) {
+            nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")
+            nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")
+        } else{
+            nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")
+            nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")
+        }
+
+        repositories {
+            maven {
+                name = nexusId
+                url = uri(nexusUrl)
+                credentials {
+                    username = nexusUsername
+                    password = nexusPassword
+                }
+            }
+        }
+
     }
 
 }

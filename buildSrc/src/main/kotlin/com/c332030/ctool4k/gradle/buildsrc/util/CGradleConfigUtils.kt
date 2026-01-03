@@ -11,6 +11,11 @@ fun Project.getConfigValue(key: String): String? {
         .getOrNull()
 }
 
+fun Project.getRequireConfigValue(key: String): String {
+    return getConfigValue(key)
+        ?: throw IllegalArgumentException("$key is required")
+}
+
 fun Project.getJdkVersion(): String? {
     return getConfigValue(JDK_VERSION)
         ?: getConfigValue(JAVA_VERSION)
