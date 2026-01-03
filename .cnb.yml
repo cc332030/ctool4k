@@ -4,8 +4,6 @@ include:
 
 publish:
   extends: .publish
-
-publish-jdk8:
-  extends: .publish
-  env:
-    JDK_VERSION_COMPILE: 8
+  parallel:
+    matrix:
+      - JDK_VERSION_COMPILE: [25, 8]
