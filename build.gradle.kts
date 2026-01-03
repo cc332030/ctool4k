@@ -39,8 +39,13 @@ val nexusSnapshotUrl = getConfigValue("NEXUS_SNAPSHOT_URL")
 val nexusReleaseId = getConfigValue("NEXUS_RELEASE_ID")
 val nexusReleaseUrl = getConfigValue("NEXUS_RELEASE_URL")
 
-val excludedAllProjects = listOf(
-    ":ctool4k-dependencies",
+val dependenciesModule = "ctool4k-dependencies"
+
+val pomModules = listOf(
+    rootProject.name,
+    dependenciesModule,
+    "ctool4k-parent",
+    "ctool4k-component",
 )
 allprojects {
 
@@ -50,12 +55,61 @@ allprojects {
     val projectName = project.name
 
     idea {
-        module { //println("name: ${name}, projectName: ${projectName}")
+        module {
+            //println("name: ${name}, projectName: ${projectName}")
             name = projectName
         }
     }
 
-    if (this.path in excludedAllProjects) {
+    val isPom = pomModules.contains(projectName)
+            || projectName.endsWith("-pom")
+    val enableJar = !isPom
+
+    //println("projectName: $projectName, isPom: $isPom")
+    if(dependenciesModule != projectName) {
+        apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
+        tasks.named<Jar>("jar") {
+            enabled = enableJar
+        }
+    }
+
+    publishing {
+
+        publications {
+            if(!isPom) {
+                create<MavenPublication>("mavenJava") {
+                    from(components["java"])
+                }
+            }
+        }
+
+        val nexusUsername = getRequireConfigValue("NEXUS_USERNAME")
+        val nexusPassword = getRequireConfigValue("NEXUS_PASSWORD")
+
+        val nexusId: String
+        val nexusUrl: String
+        if(isSnapshot) {
+            nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")
+            nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")
+        } else{
+            nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")
+            nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")
+        }
+
+        repositories {
+            maven {
+                name = nexusId
+                url = uri(nexusUrl)
+                credentials {
+                    username = nexusUsername
+                    password = nexusPassword
+                }
+            }
+        }
+
+    }
+
+    if (isPom) {
         return@allprojects // 终止当前项目配置
     }
 
@@ -65,7 +119,6 @@ allprojects {
         return@allprojects
     }
 
-    apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
     apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
 
     val springBootVersion: String
@@ -97,7 +150,9 @@ allprojects {
     }
 
     java {
-        withSourcesJar()
+        if(enableJar) {
+            withSourcesJar()
+        }
     }
 
     kotlin {
@@ -110,47 +165,6 @@ allprojects {
 
     tasks.named<Test>("test") {
         useJUnitPlatform()
-    }
-
-    val enableJar = !projectName.endsWith("-pom")
-    tasks.named<Jar>("jar") {
-        enabled = enableJar
-    }
-    tasks.named<Jar>("sourcesJar") {
-        enabled = enableJar
-    }
-
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                from(components["java"])
-            }
-        }
-
-        val nexusUsername = getRequireConfigValue("NEXUS_USERNAME")
-        val nexusPassword = getRequireConfigValue("NEXUS_PASSWORD")
-
-        val nexusId: String
-        val nexusUrl: String
-        if(isSnapshot) {
-            nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")
-            nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")
-        } else{
-            nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")
-            nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")
-        }
-
-        repositories {
-            maven {
-                name = nexusId
-                url = uri(nexusUrl)
-                credentials {
-                    username = nexusUsername
-                    password = nexusPassword
-                }
-            }
-        }
-
     }
 
 }
