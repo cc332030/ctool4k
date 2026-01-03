@@ -1,3 +1,4 @@
+import com.c332030.ctool4k.gradle.buildsrc.plugin.applySpringPlugins
 import com.c332030.ctool4k.gradle.buildsrc.util.configureSharedRepositories
 
 fun getConfigValue(key: String): String? {
@@ -20,11 +21,9 @@ plugins {
     alias(libs.plugins.maven.publish)
 
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.spring) apply false
-
-    //alias(libs.plugins.spring.boot2) apply false
-    alias(libs.plugins.spring.boot4) apply false
     alias(libs.plugins.spring.dependency.management) apply false
+
+    applySpringPlugins(project)
 
 }
 
