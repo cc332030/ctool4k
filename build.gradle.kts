@@ -4,14 +4,14 @@ import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 
 plugins {
 
-    fun getConfigValue(key: String): String? {
-
-        val value = System.getProperty(key)
-        if(!value.isNullOrBlank()) {
-            return value
-        }
-        return System.getenv(key);
-    }
+    //fun getConfigValue(key: String): String? {
+    //
+    //    val value = System.getProperty(key)
+    //    if(!value.isNullOrBlank()) {
+    //        return value
+    //    }
+    //    return System.getenv(key);
+    //}
 
     id("idea")
 
@@ -21,12 +21,12 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.dependency.management)
 
-    val jdkVersion = getConfigValue("JDK_VERSION")
-    if("8" == jdkVersion) {
-        alias(libs.plugins.spring.boot2)
-    } else {
-        alias(libs.plugins.spring.boot4)
-    }
+    //val jdkVersion = getConfigValue("JDK_VERSION")
+    //if("8" == jdkVersion) {
+    //    alias(libs.plugins.spring.boot2)
+    //} else {
+    //    alias(libs.plugins.spring.boot4)
+    //}
 
 }
 
@@ -77,28 +77,32 @@ allprojects {
     apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
     apply(plugin = rootProject.libs.plugins.spring.dependency.management.get().pluginId)
 
+    val springBootVersion: String
+    val springCloudVersion: String
     if(isJavax) {
-        apply(plugin = rootProject.libs.plugins.spring.boot2.get().pluginId)
+        //apply(plugin = rootProject.libs.plugins.spring.boot2.get().pluginId)
+        springBootVersion = rootProject.libs.versions.spring.boot2.get()
+        springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
     } else {
-        apply(plugin = rootProject.libs.plugins.spring.boot4.get().pluginId)
-
-        //dependencyManagement {
-        //    imports {
-        //        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.1.0}")
-        //    }
-        //}
-
+        //apply(plugin = rootProject.libs.plugins.spring.boot4.get().pluginId)
+        springBootVersion = rootProject.libs.versions.spring.boot4.get()
+        springCloudVersion = rootProject.libs.versions.spring.cloud2025.get()
     }
+
+    //dependencyManagement {
+    //    imports {
+    //        mavenBom"org.springframework.boot:spring-boot-dependencies:${springBootVersion}}"()
+    //        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}}")
+    //    }
+    //}
 
     dependencies {
 
-        if (isJavax) {
-            compileOnly(rootProject.libs.spring.boot2.web)
-            testImplementation(rootProject.libs.spring.boot2.test)
-        } else {
-            compileOnly(rootProject.libs.spring.boot4.web)
-            testImplementation(rootProject.libs.spring.boot4.test)
-        }
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}}"))
+        implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}}"))
+
+        compileOnly("org.springframework.boot:spring-boot-starter-web")
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
 
         testImplementation(rootProject.libs.jupiter.engine)
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
