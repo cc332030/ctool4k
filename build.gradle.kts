@@ -144,7 +144,7 @@ allprojects {
                     from(components["javaPlatform"])
                 }
                 if(!isPom) {
-                    from(components["java"])
+                    from(components["kotlin"])
                 }
             }
 
