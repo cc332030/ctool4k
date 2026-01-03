@@ -1,7 +1,7 @@
 
 dependencies {
 
-    compileOnly(libs.javax.servlet)
+    //compileOnly(libs.javax.servlet)
 
     api(project(":ctool4k-spring-javax"))
 

@@ -1,7 +1,7 @@
 
 dependencies {
 
-    compileOnly(libs.jakarta.servlet)
+    //compileOnly(libs.jakarta.servlet)
 
     api(project(":ctool4k-spring-jakarta"))
 
