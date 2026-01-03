@@ -1,7 +1,15 @@
-import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+}
+
+fun getConfigValue(key: String): String? {
+
+    val value = System.getProperty(key)
+    if(!value.isNullOrEmpty()) {
+        return value
+    }
+    return System.getenv(key)
 }
 
 val jdk8Str = "8"
