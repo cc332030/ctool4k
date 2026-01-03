@@ -19,6 +19,13 @@ val jdk8Str = "8"
 val jdkVersion = getJdkVersion()
 val isJdk8 = jdk8Str == jdkVersion
 
+val rootProjectName = rootProject.name
+val gitProjectName = if(rootProjectName.endsWith(jdk8Str)) {
+    rootProjectName.dropLast(jdk8Str.length)
+} else {
+    rootProjectName
+}
+
 val versionStr = "0.0.1-SNAPSHOT"
 
 val author = "c332030"
@@ -30,7 +37,7 @@ val repoDomain = "github.com"
 val authorGroupPath = "${repoDomain}/${authorGroup}"
 val authorGroupUrl = "https://${authorGroupPath}"
 
-val repoPath = "${authorGroupPath}/${rootProject.name}"
+val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
 group = "com.${author}"
@@ -54,7 +61,7 @@ val nexusReleaseUrl = getConfigValue("NEXUS_RELEASE_URL")
 val dependenciesModule = "ctool4k-dependencies"
 
 val pomModules = listOf(
-    rootProject.name,
+    rootProjectName,
     dependenciesModule,
     "ctool4k-parent",
     "ctool4k-component",
