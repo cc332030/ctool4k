@@ -4,29 +4,12 @@ import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 
 plugins {
 
-    //fun getConfigValue(key: String): String? {
-    //
-    //    val value = System.getProperty(key)
-    //    if(!value.isNullOrBlank()) {
-    //        return value
-    //    }
-    //    return System.getenv(key);
-    //}
-
     id("idea")
 
     alias(libs.plugins.maven.publish)
 
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.spring)
-    alias(libs.plugins.spring.dependency.management)
-
-    //val jdkVersion = getConfigValue("JDK_VERSION")
-    //if("8" == jdkVersion) {
-    //    alias(libs.plugins.spring.boot2)
-    //} else {
-    //    alias(libs.plugins.spring.boot4)
-    //}
 
 }
 
@@ -88,13 +71,6 @@ allprojects {
         springBootVersion = rootProject.libs.versions.spring.boot4.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2025.get()
     }
-
-    //dependencyManagement {
-    //    imports {
-    //        mavenBom"org.springframework.boot:spring-boot-dependencies:${springBootVersion}}"()
-    //        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}}")
-    //    }
-    //}
 
     dependencies {
 
