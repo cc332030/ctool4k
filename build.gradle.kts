@@ -20,11 +20,7 @@ val jdkVersion = getJdkVersion()
 val isJdk8 = jdk8Str == jdkVersion.toString()
 
 val rootProjectName = rootProject.name
-val gitProjectName = if(rootProjectName.endsWith(jdk8Str)) {
-    rootProjectName.dropLast(jdk8Str.length)
-} else {
-    rootProjectName
-}
+val gitProjectName = rootProjectName.split("-").first()
 
 val versionStr = "0.0.1-SNAPSHOT"
 

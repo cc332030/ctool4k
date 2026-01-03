@@ -24,7 +24,7 @@ val isJdk8 = jdk8Str == jdkVersion
 val projectName = "ctool4k"
 var rootProjectName = projectName
 if(isJdk8) {
-    rootProjectName += jdk8Str
+    rootProjectName += "-jdk8Str"
 }
 
 rootProject.name = rootProjectName
