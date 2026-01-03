@@ -6,4 +6,6 @@ publish:
   extends: .publish
   parallel:
     matrix:
-      - JDK_VERSION_COMPILE: [25, 8]
+      - JDK_VERSION_COMPILE:
+        - 25
+        - 8
