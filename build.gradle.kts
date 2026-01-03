@@ -59,6 +59,12 @@ val pomModules = listOf(
     "ctool4k-parent",
     "ctool4k-component",
 )
+
+fun isPom(projectName: String): Boolean {
+    return pomModules.contains(projectName)
+            || projectName.endsWith("-pom")
+}
+
 allprojects {
 
     apply(plugin = "idea")
@@ -76,8 +82,7 @@ allprojects {
         }
     }
 
-    val isPom = pomModules.contains(projectName)
-            || projectName.endsWith("-pom")
+    val isPom = isPom(projectName)
     val enableJar = !isPom
 
     //println("projectName: $projectName, isPom: $isPom")
