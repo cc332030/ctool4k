@@ -13,14 +13,12 @@ fun getConfigValue(key: String): String? {
 }
 
 val jdk8Str = "8"
-extra["jdk8Str"] = jdk8Str
 
 val jdkVersion = getConfigValue("JDK_VERSION")
+    ?: getConfigValue("java.version")?.split(".")[0]
 println("JDK_VERSION: $jdkVersion")
-extra["jdkVersion"] = jdkVersion
 
 val isJdk8 = jdk8Str == jdkVersion
-extra["isJdk8"] = isJdk8
 
 var rootProjectName = "ctool4k"
 if(isJdk8) {
