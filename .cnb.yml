@@ -1,11 +1,23 @@
 
 include:
-  - https://cnb.cool/cc332030/gradle/-/blob/master/gitlab/publish.yml
+  - https://cnb.cool/cc332030/gradle/-/blob/master/gitlab/publish-job.yml
 
-publish:
-  extends: .publish
-  parallel:
-    matrix:
-      - JDK_VERSION_COMPILE:
-        - 25
-        - 8
+.publish: &publish
+  extends: .publish_job
+
+.publish-8: &publish-8
+  extends: .publish_job
+  env:
+    JDK_VERSION_COMPILE: 8
+
+"(main|master)":
+  pull_request:
+    - <<: *publish
+    - <<: *publish-8
+  push:
+    - <<: *publish
+    - <<: *publish-8
+$:
+  tag_push:
+    - <<: *publish
+    - <<: *publish-8
