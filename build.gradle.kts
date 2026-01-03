@@ -1,5 +1,4 @@
 
-import com.c332030.ctool4k.gradle.buildsrc.util.configureSharedRepositories
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
 
@@ -48,10 +47,6 @@ allprojects {
             //println("name: ${name}, project.name: ${project.name}")
             name = project.name
         }
-    }
-
-    repositories {
-        configureSharedRepositories(this@allprojects)
     }
 
     if (this.path in excludedAllProjects) {
