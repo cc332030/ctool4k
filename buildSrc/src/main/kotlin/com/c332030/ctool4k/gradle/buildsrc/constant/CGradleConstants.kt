@@ -10,3 +10,5 @@ package com.c332030.ctool4k.gradle.buildsrc.constant
  */
 
 const val JDK_VERSION = "JDK_VERSION"
+
+const val JAVA_VERSION = "java.version"

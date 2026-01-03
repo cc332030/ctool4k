@@ -1,6 +1,7 @@
 
 import com.c332030.ctool4k.gradle.buildsrc.util.configureSharedRepositories
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
+import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
 
 plugins {
 
@@ -15,7 +16,7 @@ plugins {
 
 val jdk8Str = "8"
 
-val jdkVersion = getConfigValue("JDK_VERSION")
+val jdkVersion = getJdkVersion()
 val isJdk8 = jdk8Str == jdkVersion
 
 group = "com.c332030"

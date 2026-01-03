@@ -1,4 +1,3 @@
-
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
 }
@@ -15,7 +14,9 @@ fun getConfigValue(key: String): String? {
 val jdk8Str = "8"
 
 val jdkVersion = getConfigValue("JDK_VERSION")
-    ?: getConfigValue("java.version")?.split(".")[0]
+    ?: getConfigValue("java.version")
+        ?.split('.')
+        ?.firstOrNull()
 println("JDK_VERSION: $jdkVersion")
 
 val isJdk8 = jdk8Str == jdkVersion
