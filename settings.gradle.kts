@@ -1,9 +1,25 @@
+import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
 }
 
-rootProject.name = "ctool4k"
+val jdk8Str = "8"
+extra["jdk8Str"] = jdk8Str
+
+val jdkVersion = getConfigValue("JDK_VERSION")
+println("JDK_VERSION: $jdkVersion")
+extra["jdkVersion"] = jdkVersion
+
+val isJdk8 = jdk8Str == jdkVersion
+extra["isJdk8"] = isJdk8
+
+var rootProjectName = "ctool4k"
+if(isJdk8) {
+    rootProjectName += jdk8Str
+}
+
+rootProject.name = rootProjectName
 
 val baseDir = file(".")
 baseDir.walk() // 递归遍历所有子目录

@@ -13,7 +13,10 @@ plugins {
 
 }
 
+val jdk8Str = "8"
+
 val jdkVersion = getConfigValue("JDK_VERSION")
+val isJdk8 = jdk8Str == jdkVersion
 
 group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
@@ -54,13 +57,18 @@ allprojects {
         return@allprojects // 终止当前项目配置
     }
 
-    val isJavax = project.name.endsWith("-javax")
+    val isJakarta = project.name.endsWith("-jakarta")
+    if(isJdk8 && isJakarta) {
+        return@allprojects
+    }
+
     apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
     apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
 
     val springBootVersion: String
     val springCloudVersion: String
-    if(isJavax) {
+
+    if(isJdk8) {
         springBootVersion = rootProject.libs.versions.spring.boot2.get()
         springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
     } else {
