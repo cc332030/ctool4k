@@ -1,31 +1,36 @@
-import com.c332030.ctool4k.gradle.buildsrc.plugin.applySpringPlugins
+
 import com.c332030.ctool4k.gradle.buildsrc.util.configureSharedRepositories
-
-fun getConfigValue(key: String): String? {
-    return providers
-        // 1. 系统属性（-D 参数）
-        .systemProperty(key)
-        // 2. 环境变量
-        .orElse(providers.environmentVariable(key))
-        // 3. gradle.properties
-        .orElse(providers.gradleProperty(key))
-        .getOrNull()
-}
-
-val jdkVersion = getConfigValue("jdk-version")
+import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 
 plugins {
+
+    fun getConfigValue(key: String): String? {
+
+        val value = System.getProperty(key)
+        if(!value.isNullOrBlank()) {
+            return value
+        }
+        return System.getenv(key);
+    }
 
     id("idea")
 
     alias(libs.plugins.maven.publish)
 
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.spring.dependency.management) apply false
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.dependency.management)
 
-    applySpringPlugins(project)
+    val jdkVersion = getConfigValue("JDK_VERSION")
+    if("8" == jdkVersion) {
+        alias(libs.plugins.spring.boot2)
+    } else {
+        alias(libs.plugins.spring.boot4)
+    }
 
 }
+
+val jdkVersion = getConfigValue("JDK_VERSION")
 
 group = "com.c332030"
 version = "0.0.1-SNAPSHOT"
