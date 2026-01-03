@@ -24,7 +24,7 @@ repositories {
         }
     }
 
-    mavenCentral()
     gradlePluginPortal()
+    mavenCentral()
 
 }
