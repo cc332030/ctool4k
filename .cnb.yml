@@ -1,6 +1,4 @@
 
-jdk-version: 25
-
 include:
   - https://cnb.cool/cc332030/gradle/-/blob/master/gitlab/publish.yml
 
@@ -8,4 +6,4 @@ include:
 publish-jdk8:
   extends: .publish  # 假设 include 文件中有一个 .publish 任务
   env:
-    JDK_VERSION: "8"
+    JDK_VERSION_COMPILE: 8
