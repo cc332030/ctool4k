@@ -11,18 +11,6 @@ spring-cloud2025 = "2025.1.0"
 jupiter-engine = "5.12.1"
 
 [libraries]
-
-spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web" }
-#spring-boot2-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot2" }
-#spring-boot4-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot4" }
-
-spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
-#spring-boot2-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot2" }
-#spring-boot4-test = { module = "org.springframework.boot:spring-boot-starter-test", version.ref = "spring-boot4" }
-
-javax-servlet = { module = "javax.servlet:javax.servlet-api", version = "4.0.1" }
-jakarta-servlet = { module = "jakarta.servlet:jakarta.servlet-api", version = "6.1.0" }
-
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter-engine" }
 
 hutool = { module = "cn.hutool:hutool-all", version = "5.8.42" }
@@ -32,8 +20,3 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-jvm" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-jvm" }
 
 maven-publish = { id = "maven-publish" }
-
-spring-dependency-management = { id = "io.spring.dependency-management", version = "1.1.7" }
-
-#spring-boot2 = { id = "org.springframework.boot", version.ref = "spring-boot2" }
-#spring-boot4 = { id = "org.springframework.boot", version.ref = "spring-boot4" }
