@@ -42,10 +42,11 @@ allprojects {
     apply(plugin = "idea")
     apply(plugin = "maven-publish")
 
+    val projectName = project.name
     idea {
         module {
-            //println("name: ${name}, project.name: ${project.name}")
-            name = project.name
+            //println("name: ${name}, projectName: ${projectName}")
+            name = projectName
         }
     }
 
@@ -53,8 +54,8 @@ allprojects {
         return@allprojects // 终止当前项目配置
     }
 
-    val isJavax = project.name.endsWith("-javax")
-    val isJakarta = project.name.endsWith("-jakarta")
+    val isJavax = projectName.endsWith("-javax")
+    val isJakarta = projectName.endsWith("-jakarta")
     if(isJdk8 && isJakarta) {
         return@allprojects
     }
