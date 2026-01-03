@@ -17,7 +17,7 @@ plugins {
 val jdk8Str = "8"
 
 val jdkVersion = getJdkVersion()
-val isJdk8 = jdk8Str == jdkVersion
+val isJdk8 = jdk8Str == jdkVersion.toString()
 
 val rootProjectName = rootProject.name
 val gitProjectName = if(rootProjectName.endsWith(jdk8Str)) {
@@ -231,6 +231,7 @@ allprojects {
     }
 
     kotlin {
+        jvmToolchain(jdkVersion)
         compilerOptions {
             freeCompilerArgs.addAll(
                 "-Xjsr305=strict", "-Xannotation-default-target=param-property"

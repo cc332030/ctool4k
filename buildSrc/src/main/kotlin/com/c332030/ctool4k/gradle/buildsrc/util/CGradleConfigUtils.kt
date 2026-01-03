@@ -16,9 +16,12 @@ fun Project.getRequireConfigValue(key: String): String {
         ?: throw IllegalArgumentException("$key is required")
 }
 
-fun Project.getJdkVersion(): String? {
-    return getConfigValue(JDK_VERSION)
+fun Project.getJdkVersion(): Int {
+
+    val jdkVersion = getConfigValue(JDK_VERSION)
         ?: getConfigValue(JAVA_VERSION)
             ?.split('.')
             ?.firstOrNull()
+            ?: throw IllegalStateException("Unknow jdk version")
+    return jdkVersion.toInt()
 }
