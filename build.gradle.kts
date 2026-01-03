@@ -21,7 +21,19 @@ val isJdk8 = jdk8Str == jdkVersion
 
 val versionStr = "0.0.1-SNAPSHOT"
 
-group = "com.c332030"
+val author = "c332030"
+val authorGroup = "c${author}"
+val authorEmail = "${author}@${author}.com"
+
+val repoDomain = "github.com"
+
+val authorGroupPath = "${repoDomain}/${authorGroup}"
+val authorGroupUrl = "https://${authorGroupPath}"
+
+val repoPath = "${authorGroupPath}/${rootProject.name}"
+val repoUrl = "https://${repoPath}"
+
+group = "com.${author}"
 version = versionStr
 description = "CTool for Kotlin"
 
@@ -76,11 +88,53 @@ allprojects {
     publishing {
 
         publications {
-            if(!isPom) {
-                create<MavenPublication>("mavenJava") {
+
+            val publishName = if(isPom) {
+                "mavenPom"
+            } else {
+                "mavenJava"
+            }
+            create<MavenPublication>(publishName) {
+
+                pom {
+
+                    if(isPom) {
+                        packaging = "pom"
+                    }
+
+                    //name.set("CTool4K Dependencies")
+                    //description.set("Bill of Materials for CTool4K project - manages all dependency versions")
+                    url.set(repoUrl)
+
+                    licenses {
+                        license {
+                            name.set("Apache License, Version 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                            distribution.set("repo")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set(author)
+                            name.set(author)
+                            email.set(authorEmail)
+                            organization.set(authorGroup)
+                            organizationUrl.set(authorGroupUrl)
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://${repoPath}.git")
+                        developerConnection.set("scm:git:ssh://${repoPath}.git")
+                        url.set(repoUrl)
+                    }
+                }
+
+                if(!isPom) {
                     from(components["java"])
                 }
             }
+
         }
 
         val nexusUsername = getRequireConfigValue("NEXUS_USERNAME")

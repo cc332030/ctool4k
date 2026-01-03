@@ -21,7 +21,8 @@ println("jdkVersion: $jdkVersion")
 
 val isJdk8 = jdk8Str == jdkVersion
 
-var rootProjectName = "ctool4k"
+val projectName = "ctool4k"
+var rootProjectName = projectName
 if(isJdk8) {
     rootProjectName += jdk8Str
 }
