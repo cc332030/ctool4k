@@ -21,14 +21,7 @@ println("jdkVersion: $jdkVersion")
 
 val isJdk8 = jdk8Str == jdkVersion
 
-val projectName = "ctool4k"
-var rootProjectName = projectName
-if(isJdk8) {
-    rootProjectName += "-${jdk8Str}"
-}
-
-rootProject.name = rootProjectName
-println("rootProjectName: $rootProjectName")
+rootProject.name = "ctool4k"
 
 val baseDir = file(".")
 baseDir.walk() // 递归遍历所有子目录

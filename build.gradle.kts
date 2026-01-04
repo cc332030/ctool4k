@@ -36,7 +36,7 @@ val authorGroupUrl = "https://${authorGroupPath}"
 val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
-group = "com.${author}.${rootProjectName}"
+group = "com.${author}"
 version = versionStr
 description = "CTool for Kotlin"
 
