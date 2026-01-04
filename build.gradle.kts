@@ -238,7 +238,6 @@ allprojects {
     kotlin {
         jvmToolchain{
             languageVersion = JavaLanguageVersion.of(jdkVersion)
-            vendor = JvmVendorSpec.IBM
         }
         compilerOptions {
             freeCompilerArgs.addAll(
