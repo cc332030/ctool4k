@@ -41,6 +41,10 @@ baseDir.walk() // 递归遍历所有子目录
     .forEach { moduleDir ->
 
         val moduleName = moduleDir.name
+        if(isJdk8 && moduleName.endsWith("-jakarta")) {
+            return@forEach
+        }
+
         val logicalModuleName = ":$moduleName"
 
         include(logicalModuleName)
