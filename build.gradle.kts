@@ -233,7 +233,10 @@ allprojects {
     }
 
     kotlin {
-        jvmToolchain(jdkVersion)
+        jvmToolchain{
+            languageVersion = JavaLanguageVersion.of(jdkVersion)
+            vendor = JvmVendorSpec.IBM
+        }
         compilerOptions {
             freeCompilerArgs.addAll(
                 "-Xjsr305=strict", "-Xannotation-default-target=param-property"
