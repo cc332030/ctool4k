@@ -165,11 +165,11 @@ allprojects {
             val nexusId: String
             val nexusUrl: String
             if(isSnapshot) {
-                nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")!!
-                nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")!!
+                nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")
+                nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")
             } else{
-                nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")!!
-                nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")!!
+                nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")
+                nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")
             }
 
             repositories {
