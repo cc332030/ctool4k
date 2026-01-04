@@ -22,7 +22,6 @@ val isJdk8 = jdk8Str == jdkVersion.toString()
 val rootProjectName = rootProject.name
 val gitProjectName = rootProjectName.split("-").first()
 
-val versionStr = "0.0.1-SNAPSHOT"
 
 val author = "c332030"
 val authorGroup = "c${author}"
@@ -36,11 +35,17 @@ val authorGroupUrl = "https://${authorGroupPath}"
 val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
+var versionStr = "0.0.1-SNAPSHOT"
+val isSnapshot = versionStr.endsWith("-SNAPSHOT")
+
+if(isJdk8) {
+    versionStr += "-jdk${jdk8Str}"
+}
+
 group = "com.${author}"
 version = versionStr
 description = "CTool for Kotlin"
 
-val isSnapshot = versionStr.endsWith("-SNAPSHOT")
 
 val mavenCentral = getConfigValue("MAVEN_CENTRAL")
 println("mavenCentral: $mavenCentral")
