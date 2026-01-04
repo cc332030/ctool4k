@@ -1,7 +1,6 @@
 
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
-import com.c332030.ctool4k.gradle.buildsrc.util.getRequireConfigValue
 
 plugins {
 
@@ -157,17 +156,17 @@ allprojects {
 
         }
 
-        val nexusUsername = getRequireConfigValue("NEXUS_USERNAME")
-        val nexusPassword = getRequireConfigValue("NEXUS_PASSWORD")
+        val nexusUsername = getConfigValue("NEXUS_USERNAME")
+        val nexusPassword = getConfigValue("NEXUS_PASSWORD")
 
         val nexusId: String
         val nexusUrl: String
         if(isSnapshot) {
-            nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")
-            nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")
+            nexusId = getConfigValue("NEXUS_SNAPSHOT_ID")!!
+            nexusUrl = getConfigValue("NEXUS_SNAPSHOT_URL")!!
         } else{
-            nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")
-            nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")
+            nexusId = getConfigValue("NEXUS_RELEASE_ID")!!
+            nexusUrl = getConfigValue("NEXUS_RELEASE_URL")!!
         }
 
         repositories {
