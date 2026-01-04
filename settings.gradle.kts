@@ -52,14 +52,12 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
 
-        // 从配置中读取仓库相关参数
         val mavenCentralUrl = getConfigValue("MAVEN_CENTRAL")
         val nexusUsername = getConfigValue("NEXUS_USERNAME")
         val nexusPassword = getConfigValue("NEXUS_PASSWORD")
         val nexusSnapshotUrl = getConfigValue("NEXUS_SNAPSHOT_URL")
         val nexusReleaseUrl = getConfigValue("NEXUS_RELEASE_URL")
 
-        // 核心仓库配置（与原逻辑完全一致）
         mavenLocal()
 
         if (!mavenCentralUrl.isNullOrEmpty()) {
