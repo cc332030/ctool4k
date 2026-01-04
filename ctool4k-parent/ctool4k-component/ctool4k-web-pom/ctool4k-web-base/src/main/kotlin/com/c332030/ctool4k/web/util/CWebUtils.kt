@@ -1,6 +1,8 @@
 package com.c332030.ctool4k.web.util
 
+import cn.hutool.core.io.IoUtil
 import com.c332030.ctool4k.core.util.ignoreCaseSetOf
+import org.springframework.util.CollectionUtils.toIterator
 import java.io.InputStream
 import java.io.OutputStream
 import java.util.*
@@ -36,7 +38,7 @@ fun forward(
     forward(
         inputStream,
         outputStream,
-        headerNameEnumeration.asIterator(),
+        toIterator(headerNameEnumeration),
         getHeaderFunc,
         setHeaderFunc,
     )
@@ -63,6 +65,6 @@ fun forward(
         }
     }
 
-    inputStream.transferTo(outputStream)
+    IoUtil.copy(inputStream, outputStream)
 
 }
