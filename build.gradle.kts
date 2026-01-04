@@ -36,16 +36,7 @@ val authorGroupUrl = "https://${authorGroupPath}"
 val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
-fun getGroup(): String {
-
-    val groupTmp = "com.${author}.${rootProjectName}"
-    if(isJdk8) {
-        return "${groupTmp}${jdk8Str}"
-    }
-    return groupTmp;
-}
-
-group = getGroup()
+group = "com.${author}.${rootProjectName}"
 version = versionStr
 description = "CTool for Kotlin"
 
