@@ -1,4 +1,5 @@
 
+import com.c332030.ctool4k.gradle.buildsrc.constant.SNAPSHOT
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
 import com.c332030.ctool4k.gradle.buildsrc.util.getRequireConfigValue
@@ -36,8 +37,8 @@ val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
 val mainVersion = "0.0.1"
-val versionSuffix = "SNAPSHOT"
-val isSnapshot = versionSuffix == "SNAPSHOT"
+val versionSuffix = SNAPSHOT
+val isSnapshot = versionSuffix == SNAPSHOT
 
 var versionStr = "0.0.1-SNAPSHOT"
 if(isJdk8) {
