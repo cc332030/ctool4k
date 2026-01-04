@@ -70,6 +70,10 @@ fun isPom(projectName: String): Boolean {
 
 allprojects {
 
+    val libs = rootProject.libs
+    val versions = libs.versions
+    val plugins = libs.plugins
+
     apply(plugin = "idea")
     apply(plugin = "maven-publish")
 
@@ -92,7 +96,7 @@ allprojects {
     if(dependenciesModule == projectName) {
         apply(plugin = "java-platform")
     } else {
-        apply(plugin = rootProject.libs.plugins.kotlin.jvm.get().pluginId)
+        apply(plugin = plugins.kotlin.jvm.get().pluginId)
         tasks.named<Jar>("jar") {
             enabled = enableJar
         }
@@ -190,20 +194,20 @@ allprojects {
         return@allprojects
     }
 
-    apply(plugin = rootProject.libs.plugins.kotlin.spring.get().pluginId)
+    apply(plugin = plugins.kotlin.spring.get().pluginId)
 
     val springBootVersion: String
     val springCloudVersion: String
 
     if (isJavax) {
-        springBootVersion = rootProject.libs.versions.spring.boot2.get()
-        springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
+        springBootVersion = versions.spring.boot2.get()
+        springCloudVersion = versions.spring.cloud2021.get()
     } else if (isJdk8) {
-        springBootVersion = rootProject.libs.versions.spring.boot2.get()
-        springCloudVersion = rootProject.libs.versions.spring.cloud2021.get()
+        springBootVersion = versions.spring.boot2.get()
+        springCloudVersion = versions.spring.cloud2021.get()
     } else {
-        springBootVersion = rootProject.libs.versions.spring.boot4.get()
-        springCloudVersion = rootProject.libs.versions.spring.cloud2025.get()
+        springBootVersion = versions.spring.boot4.get()
+        springCloudVersion = versions.spring.cloud2025.get()
     }
 
     dependencies {
@@ -212,9 +216,11 @@ allprojects {
         implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"))
 
         compileOnly("org.springframework.boot:spring-boot-starter-web")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
 
-        testImplementation(rootProject.libs.jupiter.engine)
+        compileOnly(libs.hutool)
+
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+        testImplementation(libs.jupiter.engine)
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
         testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
