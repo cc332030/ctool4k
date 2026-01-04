@@ -35,11 +35,15 @@ val authorGroupUrl = "https://${authorGroupPath}"
 val repoPath = "${authorGroupPath}/${gitProjectName}"
 val repoUrl = "https://${repoPath}"
 
-var versionStr = "0.0.1-SNAPSHOT"
-val isSnapshot = versionStr.endsWith("-SNAPSHOT")
+val mainVersion = "0.0.1"
+val versionSuffix = "SNAPSHOT"
+val isSnapshot = versionSuffix == "SNAPSHOT"
 
+var versionStr = "0.0.1-SNAPSHOT"
 if(isJdk8) {
-    versionStr += "-jdk${jdk8Str}"
+    versionStr = "${mainVersion}-jdk${jdk8Str}-${versionSuffix}"
+} else {
+    versionStr = "${mainVersion}-${versionSuffix}"
 }
 
 group = "com.${author}"
