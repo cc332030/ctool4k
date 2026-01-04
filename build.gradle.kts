@@ -1,6 +1,7 @@
 
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
+import com.c332030.ctool4k.gradle.buildsrc.util.getRequireConfigValue
 
 plugins {
 
@@ -101,86 +102,89 @@ allprojects {
         }
     }
 
-    publishing {
 
-        publications {
+    val nexusUsername = getConfigValue("NEXUS_USERNAME")
+    if(!nexusUsername.isNullOrEmpty()) {
+        publishing {
 
-            val publishName = if(isPom) {
-                "mavenPom"
-            } else {
-                "mavenJava"
-            }
-            create<MavenPublication>(publishName) {
+            publications {
 
-                pom {
+                val publishName = if(isPom) {
+                    "mavenPom"
+                } else {
+                    "mavenJava"
+                }
+                create<MavenPublication>(publishName) {
 
-                    if(isPom) {
-                        packaging = "pom"
-                    }
+                    pom {
 
-                    //name.set("CTool4K Dependencies")
-                    //description.set("Bill of Materials for CTool4K project - manages all dependency versions")
-                    url.set(repoUrl)
-
-                    licenses {
-                        license {
-                            name.set("Apache License, Version 2.0")
-                            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                            distribution.set("repo")
+                        if(isPom) {
+                            packaging = "pom"
                         }
-                    }
 
-                    developers {
-                        developer {
-                            id.set(author)
-                            name.set(author)
-                            email.set(authorEmail)
-                            organization.set(authorGroup)
-                            organizationUrl.set(authorGroupUrl)
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:git://${repoPath}.git")
-                        developerConnection.set("scm:git:ssh://${repoPath}.git")
+                        //name.set("CTool4K Dependencies")
+                        //description.set("Bill of Materials for CTool4K project - manages all dependency versions")
                         url.set(repoUrl)
+
+                        licenses {
+                            license {
+                                name.set("Apache License, Version 2.0")
+                                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                                distribution.set("repo")
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id.set(author)
+                                name.set(author)
+                                email.set(authorEmail)
+                                organization.set(authorGroup)
+                                organizationUrl.set(authorGroupUrl)
+                            }
+                        }
+                        scm {
+                            connection.set("scm:git:git://${repoPath}.git")
+                            developerConnection.set("scm:git:ssh://${repoPath}.git")
+                            url.set(repoUrl)
+                        }
+                    }
+
+                    if(dependenciesModule == projectName) {
+                        from(components["javaPlatform"])
+                    }
+                    if(!isPom) {
+                        from(components["kotlin"])
                     }
                 }
 
-                if(dependenciesModule == projectName) {
-                    from(components["javaPlatform"])
-                }
-                if(!isPom) {
-                    from(components["kotlin"])
+            }
+
+            val nexusPassword = getRequireConfigValue("NEXUS_PASSWORD")
+
+            val nexusId: String
+            val nexusUrl: String
+            if(isSnapshot) {
+                nexusId = getRequireConfigValue("NEXUS_SNAPSHOT_ID")!!
+                nexusUrl = getRequireConfigValue("NEXUS_SNAPSHOT_URL")!!
+            } else{
+                nexusId = getRequireConfigValue("NEXUS_RELEASE_ID")!!
+                nexusUrl = getRequireConfigValue("NEXUS_RELEASE_URL")!!
+            }
+
+            repositories {
+                maven {
+                    // 影响 idea 侧边栏名称
+                    //name = nexusId
+                    url = uri(nexusUrl)
+                    credentials {
+                        username = nexusUsername
+                        password = nexusPassword
+                    }
                 }
             }
 
         }
-
-        val nexusUsername = getConfigValue("NEXUS_USERNAME")
-        val nexusPassword = getConfigValue("NEXUS_PASSWORD")
-
-        val nexusId: String
-        val nexusUrl: String
-        if(isSnapshot) {
-            nexusId = getConfigValue("NEXUS_SNAPSHOT_ID")!!
-            nexusUrl = getConfigValue("NEXUS_SNAPSHOT_URL")!!
-        } else{
-            nexusId = getConfigValue("NEXUS_RELEASE_ID")!!
-            nexusUrl = getConfigValue("NEXUS_RELEASE_URL")!!
-        }
-
-        repositories {
-            maven {
-                // 影响 idea 侧边栏名称
-                //name = nexusId
-                url = uri(nexusUrl)
-                credentials {
-                    username = nexusUsername
-                    password = nexusPassword
-                }
-            }
-        }
-
     }
 
     if (isPom) {
