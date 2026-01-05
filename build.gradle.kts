@@ -46,6 +46,7 @@ if(isJdk8) {
 } else {
     versionStr = "${mainVersion}-${versionSuffix}"
 }
+println("version: $versionStr")
 
 group = "com.${author}"
 version = versionStr
