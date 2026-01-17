@@ -1,3 +1,6 @@
 
+jdk-compile-8: 8
+jdk-compile-25: 25
+
 include:
-  - https://cnb.cool/cc332030/gradle/-/blob/master/cnb/publish-and-rerun-with-jdk8.yml
+  - https://cnb.cool/cc332030/gradle/-/blob/master/cnb/publish.yml
