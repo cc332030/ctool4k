@@ -52,10 +52,6 @@ group = "com.${author}"
 version = versionStr
 description = "CTool for Kotlin"
 
-
-val mavenCentral = getConfigValue("MAVEN_CENTRAL")
-println("mavenCentral: $mavenCentral")
-
 val nexusUsername = getConfigValue("NEXUS_USERNAME")
 val nexusPassword = getConfigValue("NEXUS_PASSWORD")
 
