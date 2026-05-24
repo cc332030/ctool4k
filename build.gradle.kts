@@ -3,6 +3,8 @@ import com.c332030.ctool4k.gradle.buildsrc.constant.SNAPSHOT
 import com.c332030.ctool4k.gradle.buildsrc.util.getConfigValue
 import com.c332030.ctool4k.gradle.buildsrc.util.getJdkVersion
 import com.c332030.ctool4k.gradle.buildsrc.util.getRequireConfigValue
+import org.gradle.api.internal.artifacts.dsl.dependencies.DependenciesExtensionModule.module
+import org.gradle.internal.impldep.org.bouncycastle.asn1.x509.X509ObjectIdentifiers.organization
 
 plugins {
 
@@ -61,11 +63,16 @@ val nexusSnapshotUrl = getConfigValue("NEXUS_SNAPSHOT_URL")
 val nexusReleaseId = getConfigValue("NEXUS_RELEASE_ID")
 val nexusReleaseUrl = getConfigValue("NEXUS_RELEASE_URL")
 
+val bomModuleSuffixes = listOf(
+    "-bom",
+    "-dependencies"
+)
+
 val dependenciesModule = "ctool4k-dependencies"
 
 val pomModules = listOf(
     rootProjectName,
-    dependenciesModule,
+    "ctool4k-dependencies",
     "ctool4k-parent",
     "ctool4k-component",
 )
@@ -99,8 +106,16 @@ allprojects {
     val isPom = isPom(projectName)
     val enableJar = !isPom
 
-    //println("projectName: $projectName, isPom: $isPom")
-    if(dependenciesModule == projectName) {
+
+    var isBom = false;
+    bomModuleSuffixes.forEach { suffix ->
+        if(projectName.endsWith(suffix)) {
+            isBom = true
+        }
+    }
+
+    println("projectName: $projectName, isPom: $isPom, isBom: $isBom")
+    if(isBom) {
         apply(plugin = "java-platform")
     } else {
         apply(plugin = plugins.kotlin.jvm.get().pluginId)
@@ -157,7 +172,7 @@ allprojects {
                         }
                     }
 
-                    if(dependenciesModule == projectName) {
+                    if(isBom) {
                         from(components["javaPlatform"])
                     }
                     if(!isPom) {
@@ -237,7 +252,7 @@ allprojects {
     }
 
     java {
-        if(enableJar) {
+        if (enableJar) {
             withSourcesJar()
         }
     }
