@@ -68,8 +68,6 @@ val bomModuleSuffixes = listOf(
     "-dependencies"
 )
 
-val dependenciesModule = "ctool4k-dependencies"
-
 val pomModules = listOf(
     rootProjectName,
     "ctool4k-dependencies",
